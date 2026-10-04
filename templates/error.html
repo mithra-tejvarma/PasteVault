@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}{{ error_title or "Error" }} - PasteVault{% endblock %}
+
+{% block content %}
+<div class="message-wrapper">
+  <div class="card status-card">
+    <div class="status-icon status-error">
+      <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="8" x2="12" y2="12"></line>
+        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+      </svg>
+    </div>
+    <h1 class="status-title">{{ error_title or "An Error Occurred" }}</h1>
+    <p class="status-description">
+      {{ error_message or "The requested paste does not exist or has already been deleted." }}
+    </p>
+    <div class="status-actions">
+      <a href="{{ url_for('create_paste') }}" class="btn btn-primary">Create a Paste</a>
+      <a href="{{ url_for('index') }}" class="btn btn-secondary">Go to Home</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% block title %}Create a Paste - PasteVault{% endblock %}
+
+{% block content %}
+<div class="form-wrapper">
+  <div class="card form-card">
+    <div class="card-header">
+      <h1 class="card-title">Create a New Paste</h1>
+      <p class="card-subtitle">Share notes, code snippets, images, or configuration files securely.</p>
+    </div>
+
+    <form method="POST" action="{{ url_for('create_paste') }}" enctype="multipart/form-data" novalidate class="paste-form">
+      <!-- Title Input -->
+      <div class="form-group {% if errors.title %}has-error{% endif %}">
+        <div class="label-row">
+          <label for="title" class="form-label">
+            Title <span class="required-star">*</span>
+          </label>
+          <span class="char-count" id="title-counter">0 / 100</span>
+        </div>
+        <input
+          type="text"
+          id="title"
+          name="title"
+          class="form-control {% if errors.title %}is-invalid{% endif %}"
+          placeholder="e.g. Python Interview Notes or database_config.py"
+          value="{{ form_data.title or '' }}"
+          maxlength="100"
+          autofocus
+          required
+        >
+        {% if errors.title %}
+          <div class="error-message">{{ errors.title }}</div>
+        {% else %}
+          <div class="field-hint">A short descriptive name for this paste.</div>
+        {% endif %}
+      </div>
+
+      <!-- Expiration Dropdown -->
+      <div class="form-group {% if errors.expiry %}has-error{% endif %}">
+        <label for="expiry" class="form-label">Expiration</label>
+        <select id="expiry" name="expiry" class="form-control form-select">
+          <option value="never" {% if form_data.expiry == 'never' or not form_data.expiry %}selected{% endif %}>Never</option>
+          <option value="10m" {% if form_data.expiry == '10m' %}selected{% endif %}>10 minutes</option>
+          <option value="1h" {% if form_data.expiry == '1h' %}selected{% endif %}>1 hour</option>
+          <option value="1d" {% if form_data.expiry == '1d' %}selected{% endif %}>1 day</option>
+          <option value="7d" {% if form_data.expiry == '7d' %}selected{% endif %}>7 days</option>
+        </select>
+        {% if errors.expiry %}
+          <div class="error-message">{{ errors.expiry }}</div>
+        {% else %}
+          <div class="field-hint">The paste and any attached file will automatically expire and be deleted after this period.</div>
+        {% endif %}
+      </div>
+
+      <!-- File / Image Upload (Optional) -->
+      <div class="form-group {% if errors.file %}has-error{% endif %}">
+        <div class="label-row">
+          <label for="file" class="form-label">
+            File or Image Attachment <span class="optional-tag">(Optional)</span>
+          </label>
+          <span class="file-size-limit">Max 10 MB</span>
+        </div>
+        <div class="file-upload-box">
+          <input
+            type="file"
+            id="file"
+            name="file"
+            class="form-control-file {% if errors.file %}is-invalid{% endif %}"
+          >
+        </div>
+        {% if errors.file %}
+          <div class="error-message">{{ errors.file }}</div>
+        {% else %}
+          <div class="field-hint">Upload an image (PNG, JPG, GIF, WebP) or file (PDF, code, zip, text).</div>
+        {% endif %}
+      </div>
+
+      <!-- Content Textarea -->
+      <div class="form-group {% if errors.content %}has-error{% endif %}">
+        <div class="label-row">
+          <label for="content" class="form-label">
+            Paste Content <span class="optional-tag" id="content-requirement-label">(Required unless file attached)</span>
+          </label>
+          <span class="char-count" id="content-counter">0 / 50,000</span>
+        </div>
+        <textarea
+          id="content"
+          name="content"
+          class="form-control form-textarea code-editor {% if errors.content %}is-invalid{% endif %}"
+          rows="14"
+          placeholder="Paste or write your text, code, or notes here..."
+          maxlength="50000"
+        >{{ form_data.content or '' }}</textarea>
+        {% if errors.content %}
+          <div class="error-message">{{ errors.content }}</div>
+        {% else %}
+          <div class="field-hint">Plain text or code. Formatting and indentation are preserved safely.</div>
+        {% endif %}
+      </div>
+
+      <!-- Form Actions -->
+      <div class="form-actions">
+        <a href="{{ url_for('index') }}" class="btn btn-secondary">Cancel</a>
+        <button type="submit" class="btn btn-primary btn-submit">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+            <polyline points="7 3 7 8 15 8"></polyline>
+          </svg>
+          Create Paste
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

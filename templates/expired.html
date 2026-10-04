@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Paste Expired - PasteVault{% endblock %}
+
+{% block content %}
+<div class="message-wrapper">
+  <div class="card status-card">
+    <div class="status-icon status-expired">
+      <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"></circle>
+        <polyline points="12 6 12 12 16 14"></polyline>
+        <line x1="4" y1="4" x2="20" y2="20"></line>
+      </svg>
+    </div>
+    <h1 class="status-title">Paste Expired</h1>
+    <p class="status-description">
+      This paste is no longer available because its expiration time has passed.
+    </p>
+    <div class="status-actions">
+      <a href="{{ url_for('create_paste') }}" class="btn btn-primary">Create a New Paste</a>
+      <a href="{{ url_for('index') }}" class="btn btn-secondary">Go to Home</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

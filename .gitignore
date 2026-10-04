@@ -1,0 +1,22 @@
+# Virtual Environment
+venv/
+env/
+ENV/
+
+# Python bytecode & cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# SQLite Database & Uploads
+instance/*.db
+instance/uploads/*
+!instance/uploads/.gitkeep
+*.sqlite3
+*.db
+
+# OS & Editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
